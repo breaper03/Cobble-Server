@@ -4,6 +4,7 @@ import { backendDBManager } from './dependency-injection';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
+import * as bodyParser from 'body-parser'
 async function bootstrap() {
   dotenv.config();
   await backendDBManager.connect();
@@ -20,8 +21,9 @@ async function bootstrap() {
   };
 
   app.enableCors(corsOptions);
-
   const port = process.env.PORT || 3001;
+  app.use(bodyParser.json({ limit: '20mb' }))
+  app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }))
   await app.listen(port);
   Logger.log(`🚀 Application is running on port: ${port}${globalPrefix}`);
 }
