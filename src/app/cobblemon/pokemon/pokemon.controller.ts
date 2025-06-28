@@ -1,10 +1,18 @@
-import { Controller, Get, Post, Body, Param, BadRequestException, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  BadRequestException,
+  Query,
+} from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
 import { Cobblemon, searchPokemonSchema } from 'models/cobblemon/pokemon.model';
 
 @Controller('pokemon')
 export class PokemonController {
-  constructor(private readonly pokemonService: PokemonService) { }
+  constructor(private readonly pokemonService: PokemonService) {}
 
   @Post()
   create(@Body() Cobblemon: Cobblemon[]) {
@@ -13,19 +21,19 @@ export class PokemonController {
 
   @Get('search')
   async search(@Query() query: unknown) {
-    const parse = searchPokemonSchema.safeParse(query)
-    if (!parse.success) throw new BadRequestException(parse.error.flatten())
+    const parse = searchPokemonSchema.safeParse(query);
+    if (!parse.success) throw new BadRequestException(parse.error.flatten());
 
-    const { q, page, limit } = parse.data
-    return this.pokemonService.searchByName(q, page, limit)
+    const { q, page, limit } = parse.data;
+    return this.pokemonService.searchByName(q, page, limit);
   }
 
   @Get()
   findAll(@Query() query: unknown) {
-    const parse = searchPokemonSchema.safeParse(query)
-    if (!parse.success) throw new BadRequestException(parse.error.flatten())
+    const parse = searchPokemonSchema.safeParse(query);
+    if (!parse.success) throw new BadRequestException(parse.error.flatten());
 
-    const { page, limit } = parse.data
+    const { page, limit } = parse.data;
     return this.pokemonService.findAll(page, limit);
   }
 

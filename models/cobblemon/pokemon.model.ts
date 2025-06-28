@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const CobblemonSchema = z.object({
   id: z.nullable(z.number()).optional(),
-  Pokemon: z.nullable(z.string()).optional(),
+  Pokemon: z.string(),
   Entry: z.nullable(z.number()).optional(),
   Bucket: z.nullable(z.string()).optional(),
   Weight: z.nullable(z.number()).optional(),
@@ -24,7 +24,7 @@ export const CobblemonSchema = z.object({
 });
 
 export const searchPokemonSchema = z.object({
-  q: z.string().min(1, "Debe enviar un texto para buscar"),
+  q: z.string().optional().default(""), // permite cadena vacía
   page: z.coerce.number().min(1).default(1),
   limit: z.coerce.number().min(1).max(100).default(10),
 })

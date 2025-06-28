@@ -10,4 +10,4 @@ import { PokemonModule } from './app/cobblemon/pokemon/pokemon.module';
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
 })
-export class AppModule { }
+export class AppModule {}
