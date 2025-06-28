@@ -4,7 +4,7 @@ import {
   Cobblemon,
   CobblemonSchema,
   createCobblemonModel,
-} from 'models/cobblemon/pokemon.model';
+} from 'src/models/cobblemon/pokemon.model';
 import { backendDBManager } from 'src/dependency-injection';
 
 @Injectable()

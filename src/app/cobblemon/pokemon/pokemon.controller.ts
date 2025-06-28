@@ -8,7 +8,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
-import { Cobblemon, searchPokemonSchema } from 'models/cobblemon/pokemon.model';
+import {
+  Cobblemon,
+  searchPokemonSchema,
+} from 'src/models/cobblemon/pokemon.model';
 
 @Controller('pokemon')
 export class PokemonController {

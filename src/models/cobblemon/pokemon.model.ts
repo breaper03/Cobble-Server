@@ -1,5 +1,5 @@
-import tsValidMongoDb, { Schema } from "ts-valid-mongodb";
-import { z } from "zod";
+import tsValidMongoDb, { Schema } from 'ts-valid-mongodb';
+import { z } from 'zod';
 
 export const CobblemonSchema = z.object({
   id: z.nullable(z.number()).optional(),
@@ -7,8 +7,8 @@ export const CobblemonSchema = z.object({
   Entry: z.nullable(z.number()).optional(),
   Bucket: z.nullable(z.string()).optional(),
   Weight: z.nullable(z.number()).optional(),
-  "min-level": z.nullable(z.number()).optional(),
-  "max-level": z.nullable(z.number()).optional(),
+  'min-level': z.nullable(z.number()).optional(),
+  'max-level': z.nullable(z.number()).optional(),
   biomes: z.nullable(z.string()).optional(),
   excludedBiomes: z.nullable(z.string()).optional(),
   Time: z.nullable(z.string()).optional(),
@@ -24,17 +24,17 @@ export const CobblemonSchema = z.object({
 });
 
 export const searchPokemonSchema = z.object({
-  q: z.string().optional().default(""), // permite cadena vacía
+  q: z.string().optional().default(''), // permite cadena vacía
   page: z.coerce.number().min(1).default(1),
   limit: z.coerce.number().min(1).max(100).default(10),
-})
+});
 
 export const createCobblemonModel = (db: tsValidMongoDb) =>
   db.createModel(
     new Schema('pokemon', CobblemonSchema, {
       versionKey: true,
-      indexes: [{ key: { idex: 1 }, unique: true }]
-    })
+      indexes: [{ key: { idex: 1 }, unique: true }],
+    }),
   );
 
 export type SearchPokemon = z.infer<typeof searchPokemonSchema>;

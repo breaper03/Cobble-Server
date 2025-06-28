@@ -10,7 +10,7 @@ const UserSchema = z.object({
   email: z.string().trim().email(),
   password: z.string().min(8),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
 });
 
 type IUser = z.infer<typeof UserSchema>;
@@ -19,8 +19,8 @@ const createUserModel = (db: tsValidMongoDb) =>
   db.createModel(
     new Schema('users', UserSchema, {
       versionKey: true,
-      indexes: [{ key: { id: 1 }, unique: true }]
-    })
+      indexes: [{ key: { id: 1 }, unique: true }],
+    }),
   );
 
 export { IUser, createUserModel, UserSchema };

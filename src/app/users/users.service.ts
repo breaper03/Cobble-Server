@@ -3,7 +3,11 @@ import { backendDBManager } from 'src/dependency-injection';
 import { hash } from 'bcryptjs';
 
 import { randomUUID } from 'node:crypto';
-import { createUserModel, IUser, UserSchema } from 'models/users/users.model';
+import {
+  createUserModel,
+  IUser,
+  UserSchema,
+} from 'src/models/users/users.model';
 
 @Injectable()
 export class UsersService {
