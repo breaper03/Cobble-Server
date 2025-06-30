@@ -15,7 +15,17 @@ export class PokemonService {
       CobblemonSchema.safeParse(cobble),
     );
 
-    if (!isValid.some((isValid) => isValid.success)) return 'error';
+    if (!isValid.some(result => result.success)) {
+      // Si ninguno es válido, sacamos todos los errores
+      const errors = isValid
+        .filter(result => !result.success)
+        .map(result => result.error.errors); // extraemos el array de errores de Zod
+
+      return {
+        message: "error al cargar el JSON",
+        errors: errors.flat(), // aplanamos el arreglo de errores
+      };
+    }
 
     //? Se limpian los registros anteriores...
     await this.model.delete();
@@ -35,7 +45,7 @@ export class PokemonService {
     const skip = (page - 1) * limit;
     const regex = q.trim() ? new RegExp(q, 'i') : null;
 
-    const filter = regex ? { Pokemon: regex } : {};
+    const filter = regex ? { pokemon: regex } : {};
 
     // 1. Traer todos los resultados que coincidan o todo si no hay filtro
     const all = [...(await this.model.find(filter))];
@@ -45,8 +55,8 @@ export class PokemonService {
     const unique: Cobblemon[] = [];
 
     for (const poke of all) {
-      if (!seen.has(poke.Pokemon)) {
-        seen.add(poke.Pokemon);
+      if (!seen.has(poke.pokemon)) {
+        seen.add(poke.pokemon);
         unique.push(poke);
       }
     }
