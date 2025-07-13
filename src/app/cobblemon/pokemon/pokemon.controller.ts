@@ -15,7 +15,7 @@ import {
 
 @Controller('pokemon')
 export class PokemonController {
-  constructor(private readonly pokemonService: PokemonService) {}
+  constructor(private readonly pokemonService: PokemonService) { }
 
   @Post()
   create(@Body() Cobblemon: Cobblemon[]) {
@@ -39,6 +39,8 @@ export class PokemonController {
     const { page, limit } = parse.data;
     return this.pokemonService.findAll(page, limit);
   }
+
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
