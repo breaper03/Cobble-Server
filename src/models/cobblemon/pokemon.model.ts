@@ -1,29 +1,41 @@
 import tsValidMongoDb, { Schema } from 'ts-valid-mongodb';
 import { z } from 'zod';
+const DropSchema = z.object({
+  item: z.string(),
+  probability: z.number(),
+});
+
+const FormObjectSchema = z.object({
+  form: z.string(),
+  rarity: z.string().nullable().optional(),
+  conditions: z.string().nullable().optional(),
+});
 
 export const CobblemonSchema = z.object({
-  id: z.number(),
+  id: z.number().int(),
   pokemon: z.string(),
-  entry: z.string(),
-  bucket: z.string(),
-  weight: z.string(), // puedes convertir a number si prefieres validación estricta
-  lvMin: z.string(),
-  lvMax: z.string(),
-  biomes: z.string(),
-  excludedBiomes: z.nullable(z.string()).optional(),
-  time: z.nullable(z.string()).optional(),
-  weather: z.nullable(z.string()).optional(),
-  multipliers: z.nullable(z.string()).optional(),
-  context: z.nullable(z.string()).optional(),
-  presets: z.nullable(z.string()).optional(),
-  conditions: z.nullable(z.string()).optional(),
-  anticonditions: z.nullable(z.string()).optional(),
-  skylightmin: z.nullable(z.string()).optional(),
-  skylightmax: z.nullable(z.string()).optional(),
-  canseesky: z.nullable(z.string()).optional(),
-  uniqueForm: z.nullable(z.string()).optional(),
-  drops: z.nullable(z.string()).optional(),
-  spawnSpecificDrops: z.nullable(z.string()).optional(),
+  source: z.string(),
+  biomes: z.array(z.string()),
+  rarity: z.string().nullable(),
+  conditions: z.array(z.string()),
+  forms: z.array(z.union([z.string(), FormObjectSchema])),
+  region: z.string(),
+  generation: z.string(),
+  weight: z.array(z.number()).nullable().optional(),
+  lvMin: z.number().int().nullable().optional(),
+  lvMax: z.number().int().nullable().optional(),
+  excludedBiomes: z.string().nullable().optional(),
+  time: z.string().nullable().optional(),
+  weather: z.string().nullable().optional(),
+  multipliers: z.any().nullable().optional(),
+  context: z.string().nullable().optional(),
+  presets: z.string().nullable().optional(),
+  anticonditions: z.any().nullable().optional(),
+  skylightMin: z.any().nullable().optional(),
+  skylightMax: z.any().nullable().optional(),
+  canSeeSky: z.any().nullable().optional(),
+  drops: z.array(DropSchema).nullable().optional(),
+  spawnSpecificDrops: z.any().nullable().optional(),
 });
 
 export const searchPokemonSchema = z.object({
